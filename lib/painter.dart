@@ -1,14 +1,17 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class Painter extends CustomPainter {
-  final List<Offset> offsetList;
-  const Painter(this.offsetList);
+  final List<List<Offset>> offsetListList;
+  const Painter(this.offsetListList);
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..color = Colors.black;
-    for (final offset in offsetList) {
-      canvas.drawCircle(offset, 1, paint);
+
+    for (final offsetList in offsetListList) {
+      canvas.drawPoints(PointMode.polygon, offsetList, paint);
     }
   }
 
