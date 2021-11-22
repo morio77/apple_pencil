@@ -8,7 +8,9 @@ class Painter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = Colors.black;
+    final paint = Paint()
+      ..color = Colors.black
+      ..strokeWidth = 2;
 
     for (final offsetList in offsetListList) {
       canvas.drawPoints(PointMode.polygon, offsetList, paint);
