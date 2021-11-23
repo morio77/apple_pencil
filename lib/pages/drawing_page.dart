@@ -41,23 +41,27 @@ class _DrawingPageState extends State<DrawingPage> {
         ],
       ),
 
-      body: CustomPaint(
-        painter: Painter(dragOffsetLists, pointMode),
-        child: GestureDetector(
-          // 一度ペンを離すたびに、dragNumberをインクリメントする
-          onPanEnd: (_) {
-            dragNumber++;
-            dragOffsetLists.add(<Offset>[]);
-          },
-          // ドラッグ中、Offsetを取得し続ける
-          onPanUpdate: (details) {
+      body: Listener(
+        // ドラッグ中、Offsetを取得し続ける
+        onPointerMove: (pointerDownEvent) {
+          // スタイラスからのみ受け付ける
+          if (pointerDownEvent.kind == PointerDeviceKind.stylus) {
             final offset = Offset(
-              details.localPosition.dx,
-              details.localPosition.dy,
+              pointerDownEvent.localPosition.dx,
+              pointerDownEvent.localPosition.dy,
             );
             dragOffsetLists[dragNumber].add(offset);
             setState(() {});
-          },
+          }
+        },
+        // 一度ペンを離すたびに、dragNumberをインクリメントする
+        onPointerUp: (_) {
+          dragNumber++;
+          dragOffsetLists.add(<Offset>[]);
+        },
+        child: CustomPaint(
+          painter: Painter(dragOffsetLists, pointMode),
+          child: Container(),
         ),
       ),
 
