@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class Painter extends CustomPainter {
   final List<List<Offset>> dragOffsetLists;
-  const Painter(this.dragOffsetLists);
+  final PointMode pointMode;
+  const Painter(this.dragOffsetLists, this.pointMode);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -13,7 +14,7 @@ class Painter extends CustomPainter {
       ..strokeWidth = 2;
 
     for (final offsetList in dragOffsetLists) {
-      canvas.drawPoints(PointMode.points, offsetList, paint);
+      canvas.drawPoints(pointMode, offsetList, paint);
     }
   }
 

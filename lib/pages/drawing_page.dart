@@ -1,3 +1,6 @@
+import 'dart:math';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../painter.dart';
@@ -24,6 +27,9 @@ class _DrawingPageState extends State<DrawingPage> {
   /// .
   /// .
 
+  // 線の描画モード
+  PointMode pointMode = PointMode.polygon;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,10 +37,13 @@ class _DrawingPageState extends State<DrawingPage> {
         title: Text(
           'Offsetの総数：${dragOffsetLists.expand((element) => element).toList().length}',
         ),
+        actions: [
+          _dropdownButton(),
+        ],
       ),
 
       body: CustomPaint(
-        painter: Painter(dragOffsetLists),
+        painter: Painter(dragOffsetLists, pointMode),
         child: GestureDetector(
           // 一度ペンを離すたびに、dragNumberをインクリメントする
           onPanEnd: (_) {
@@ -62,6 +71,24 @@ class _DrawingPageState extends State<DrawingPage> {
         },
         child: const Icon(Icons.delete_forever),
       ),
+    );
+  }
+
+  DropdownButton _dropdownButton() {
+    return DropdownButton<PointMode>(
+      value: pointMode,
+      items: PointMode.values.map<DropdownMenuItem<PointMode>>(
+        (PointMode pointMode) {
+          return DropdownMenuItem<PointMode>(
+            child: Text(pointMode.toString()),
+            value: pointMode,
+          );
+        },
+      ).toList(),
+      onChanged: (PointMode? selectedPointMode) {
+        pointMode = selectedPointMode!;
+        setState(() {});
+      },
     );
   }
 }
