@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_apple_pencil/pages/drawing_page.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  // 画面の向きを縦に固定
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
 
