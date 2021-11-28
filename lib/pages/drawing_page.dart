@@ -46,6 +46,7 @@ class _DrawingPageState extends State<DrawingPage> {
         onPointerMove: (pointerDownEvent) {
           // スタイラスからのみ受け付ける
           if (pointerDownEvent.kind == PointerDeviceKind.stylus) {
+            print(pointerDownEvent.pressure);
             final offset = Offset(
               pointerDownEvent.localPosition.dx,
               pointerDownEvent.localPosition.dy,
